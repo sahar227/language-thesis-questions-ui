@@ -29,7 +29,7 @@ const createQuestionWithWrongLetter = ({ word, imageURL }, allLetters) => {
   return { word, imageURL, letter: "f", answer: false };
 };
 
-function createQuestionsPhase1(trails) {
+export default function createQuestionsPhase1(trails) {
   const allLetters = getAllUniqueLettersFromTrails(trails);
   const questions = [];
   for (const trail of trails) {
@@ -43,20 +43,3 @@ function createQuestionsPhase1(trails) {
 
   return shuffle(questions);
 }
-
-const mockTrails = [
-  {
-    word: "test",
-    imageURL: "dd",
-  },
-  {
-    word: "test2",
-    imageURL: "dd",
-  },
-  {
-    word: "garrr",
-    imageURL: "dd",
-  },
-];
-
-console.log(createQuestionsPhase1(mockTrails));
