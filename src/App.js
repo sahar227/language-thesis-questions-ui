@@ -1,23 +1,15 @@
-import logo from './logo.svg';
-import './App.css';
+import StartPage from "./pages/StartPage/StartPage";
+import "./App.css";
+import { useState } from "react";
+import Phase1 from "./pages/Phase1/Phase1";
 
 function App() {
+  const [questions, setQuestions] = useState([]);
+  // const [isLoading, setIsLoading] = useState(false);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="container">
+      {questions.length === 0 && <StartPage setQuestions={setQuestions} />}
+      {questions.length !== 0 && <Phase1 questions={questions} />}
     </div>
   );
 }
