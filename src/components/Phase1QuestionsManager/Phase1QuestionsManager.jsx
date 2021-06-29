@@ -1,16 +1,11 @@
 import React, { useEffect, useState } from "react";
-const soundClient = require("soundoftext-js");
-
-// TODO: style this component
+import soundClient from "soundoftext-js";
+import styles from "./Phase1QuestionsManager.module.css";
 
 const showLetterTimeInMS = 1000;
 
 const LetterPhase = ({ letter }) => {
-  return (
-    <div>
-      <p>{letter}</p>
-    </div>
-  );
+  return <h1 className={styles.letter}>{letter}</h1>;
 };
 
 const QuestionPhase = React.memo(
@@ -30,11 +25,17 @@ const QuestionPhase = React.memo(
     };
     return (
       <div>
+        <p>האם האות מופיעה במילה הבאה?</p>
         <h1>{word}</h1>
-        <h1>{answer.toString()}</h1>
-        <img src={imageURL} />
-        <button onClick={() => giveAnswer(true)}>True</button>
-        <button onClick={() => giveAnswer(false)}>False</button>
+        <img className={styles.image} src={imageURL} />
+        <div className={styles.buttons}>
+          <div className={styles.button} onClick={() => giveAnswer(true)}>
+            כן
+          </div>
+          <div className={styles.button} onClick={() => giveAnswer(false)}>
+            לא
+          </div>
+        </div>
       </div>
     );
   }
@@ -71,7 +72,7 @@ export default function Phase1QuestionsManager({
   }, [currentQuestionIndex]);
 
   return (
-    <div>
+    <div className={styles.container}>
       {showingLetter && <LetterPhase letter={currentQuestion.letter} />}
       {!showingLetter && (
         <QuestionPhase
