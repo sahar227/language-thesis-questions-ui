@@ -2,17 +2,9 @@
 // question: {word, letter, answer, imageURL}
 // for each word, create 8 questions - 4 with correct answer, 4 with incorrect answer
 
-function shuffle(a) {
-  for (let i = a.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [a[i], a[j]] = [a[j], a[i]];
-  }
-  return a;
-}
+import getRandomInt from "./getRandomInt";
+import shuffle from "./shuffle";
 
-const getRandomInt = (max) => {
-  return Math.floor(Math.random() * max);
-};
 const getAllUniqueLettersFromTrails = (trails) => {
   const allLetters = trails.flatMap((trail) => trail.word.split(""));
   return [...new Set(allLetters)];
