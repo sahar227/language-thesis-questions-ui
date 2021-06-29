@@ -25,8 +25,13 @@ const createQuestionWithCorrectLetter = ({ word, imageURL }) => {
 };
 
 const createQuestionWithWrongLetter = ({ word, imageURL }, allLetters) => {
-  // TODO: figure out how to get letter not in word efficiently
-  return { word, imageURL, letter: "f", answer: false };
+  // TODO: Make more efficient
+  const allLettersNotInWord = allLetters.filter(
+    (item) => ![...word].includes(item)
+  );
+  const charIndex = getRandomInt(allLettersNotInWord.length);
+  const letter = allLettersNotInWord[charIndex];
+  return { word, imageURL, letter, answer: false };
 };
 
 export default function createQuestionsPhase1(trails) {
