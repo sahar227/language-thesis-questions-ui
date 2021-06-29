@@ -1,11 +1,14 @@
 import React from "react";
 import Phase1QuestionsManager from "../../components/Phase1QuestionsManager/Phase1QuestionsManager";
 
-export default function Phase1({ questions }) {
+export default function Phase1({ questions, addReportForQuestion }) {
   return (
     <div>
       <h1>שלב ראשון</h1>
-      <Phase1QuestionsManager questions={questions} />
+      <Phase1QuestionsManager
+        questions={questions}
+        addReportForQuestion={addReportForQuestion}
+      />
     </div>
   );
 }

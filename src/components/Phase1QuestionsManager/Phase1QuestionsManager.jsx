@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from "react";
 
-// TODO: Show image and play sound
+// TODO: Play sound
 // TODO 2:style this component
-// TODO 3: Add buttons to answer the question and ask it properly
-// TODO 4: Save report of question performance: what was the question, what was the answer, what was the provided answer, how long it took
 
 const showLetterTimeInMS = 1000;
 
@@ -15,18 +13,35 @@ const LetterPhase = ({ letter }) => {
   );
 };
 
-const QuestionPhase = ({ word, answer, imageURL, setNextQuestion }) => {
+const QuestionPhase = ({ question, setNextQuestion, addReportForQuestion }) => {
+  const startTime = performance.now();
+  const { word, answer, imageURL, letter } = question;
+  const giveAnswer = (userAnswer) => {
+    const report = {
+      word,
+      letter,
+      answer,
+      userAnswer,
+      secondsToAnser: (performance.now() - startTime) / 1000,
+    };
+    addReportForQuestion(report);
+    setNextQuestion();
+  };
   return (
     <div>
       <h1>{word}</h1>
       <h1>{answer.toString()}</h1>
-      <h1>{imageURL}</h1>
-      <button onClick={setNextQuestion}>Next</button>
+      <img src={imageURL} />
+      <button onClick={() => giveAnswer(true)}>True</button>
+      <button onClick={() => giveAnswer(false)}>False</button>
     </div>
   );
 };
 
-export default function Phase1QuestionsManager({ questions }) {
+export default function Phase1QuestionsManager({
+  questions,
+  addReportForQuestion,
+}) {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [showingLetter, setShowingLetter] = useState(true);
 
@@ -48,10 +63,9 @@ export default function Phase1QuestionsManager({ questions }) {
       {showingLetter && <LetterPhase letter={currentQuestion.letter} />}
       {!showingLetter && (
         <QuestionPhase
-          answer={currentQuestion.answer}
+          question={currentQuestion}
           setNextQuestion={setNextQuestion}
-          word={currentQuestion.word}
-          imageURL={currentQuestion.imageURL}
+          addReportForQuestion={addReportForQuestion}
         />
       )}
     </div>
