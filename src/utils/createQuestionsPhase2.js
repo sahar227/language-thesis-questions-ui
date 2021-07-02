@@ -14,10 +14,6 @@ const createQuestionWithWrongTranslation = (
   allTranslations
 ) => {
   // TODO: Make more efficient
-  const allLettersNotInWord = allLetters.filter(
-    (item) => ![...word].includes(item)
-  );
-
   const allWrongTranslations = allTranslations.filter(
     (tr) => tr !== translation
   );
