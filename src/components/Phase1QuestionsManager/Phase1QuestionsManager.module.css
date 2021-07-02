@@ -9,17 +9,3 @@
 .letter {
   font-size: 60px;
 }
-
-.button {
-  display: inline-block;
-  cursor: pointer;
-  border: 1px solid black;
-  padding: 4px 30px;
-  margin-left: 20px;
-  transition: 0.1s;
-}
-
-.button:hover {
-  color: white;
-  background-color: black;
-}

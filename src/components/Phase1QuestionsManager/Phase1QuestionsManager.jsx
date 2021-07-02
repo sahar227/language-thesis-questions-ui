@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import soundClient from "soundoftext-js";
+import AnswerButton from "../AnswerButton/AnswerButton";
 import styles from "./Phase1QuestionsManager.module.css";
 
 const showLetterTimeInMS = 1000;
@@ -29,12 +30,8 @@ const QuestionPhase = React.memo(
         <h1>{word}</h1>
         <img className={styles.image} src={imageURL} />
         <div className={styles.buttons}>
-          <div className={styles.button} onClick={() => giveAnswer(true)}>
-            כן
-          </div>
-          <div className={styles.button} onClick={() => giveAnswer(false)}>
-            לא
-          </div>
+          <AnswerButton answer={true} giveAnswerFunction={giveAnswer} />
+          <AnswerButton answer={false} giveAnswerFunction={giveAnswer} />
         </div>
       </div>
     );
