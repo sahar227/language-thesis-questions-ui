@@ -24,6 +24,22 @@ const QuestionPhase = React.memo(
       addReportForQuestion(report);
       setNextQuestion();
     };
+
+    useEffect(() => {
+      const handleClick = (e) => {
+        switch (e.keyCode) {
+          case 37:
+            giveAnswer(false);
+            break;
+          case 39:
+            giveAnswer(true);
+            break;
+        }
+      };
+      document.addEventListener("keydown", handleClick);
+
+      return () => document.removeEventListener("keydown", handleClick);
+    }, []);
     return (
       <div>
         <p>האם האות מופיעה במילה הבאה?</p>
