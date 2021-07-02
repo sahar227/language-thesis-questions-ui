@@ -1,7 +1,3 @@
-// word: {word, translation, imageURL}
-// question: {word, letter, answer, imageURL}
-// for each word, create 8 questions - 4 with correct answer, 4 with incorrect answer
-
 import getRandomInt from "./getRandomInt";
 import shuffle from "./shuffle";
 
@@ -40,6 +36,7 @@ export default function createQuestionsPhase2(trails) {
     questions.push(createQuestionWithWrongTranslation(trail, allTranslations));
   }
 
+  // TODO: Maybe each block should have different questions and not the same ones reordered.
   return [
     shuffle(questions),
     shuffle(questions),
