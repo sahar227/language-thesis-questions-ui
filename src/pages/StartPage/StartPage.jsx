@@ -4,15 +4,11 @@ import createQuestionsPhase1 from "../../utils/createQuestionsPhase1";
 
 const codeExpectedLength = 24;
 
-export default function StartPage({ setQuestions }) {
+export default function StartPage({ startSessionSubmit }) {
   const [code, setCode] = useState("");
   const isButtonDisabled = code.length !== codeExpectedLength;
 
-  const onSubmit = async () => {
-    const { session, wordsPhase1 } = await startSession(code);
-    const questions = createQuestionsPhase1(wordsPhase1);
-    setQuestions(questions);
-  };
+  const onSubmit = async () => await startSessionSubmit(code);
 
   return (
     <div>
