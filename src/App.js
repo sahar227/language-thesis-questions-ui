@@ -36,7 +36,7 @@ function App() {
     ];
     const questionsPhase2 = createQuestionsPhase2(fullWordsPhase2);
     setQuestionsPhase2(questionsPhase2);
-    nextScreen();
+    setScreenID(session.groupNumber);
   };
 
   return (
