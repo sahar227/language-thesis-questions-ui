@@ -26,7 +26,7 @@ const createQuestionWithWrongLetter = ({ word, imageURL }, allLetters) => {
   return { word, imageURL, letter, answer: false };
 };
 
-export default function createQuestionsPhase1(trails) {
+function createQuestionsPhase1(trails) {
   const allLetters = getAllUniqueLettersFromTrails(trails);
   const questions = [];
   for (const trail of trails) {
@@ -40,3 +40,5 @@ export default function createQuestionsPhase1(trails) {
 
   return shuffle(questions);
 }
+
+export default createQuestionsPhase1;

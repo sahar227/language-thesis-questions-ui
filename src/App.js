@@ -1,6 +1,6 @@
 import StartPage from "./pages/StartPage/StartPage";
 import "./App.css";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import Phase1 from "./pages/Phase1/Phase1";
 import Phase2 from "./pages/Phase2/Phase2";
 import startSession from "./api/startSession";
@@ -11,12 +11,17 @@ function App() {
   const [questionsPhase1, setQuestionsPhase1] = useState([]);
   const [questionsPhase2, setQuestionsPhase2] = useState([]);
   const [screenID, setScreenID] = useState(0);
-  const [questionReport, setQuestionReport] = useState([]);
+
+  const questionReportPhase1 = useRef([]);
+  const questionReportPhase2 = useRef([]);
 
   const nextScreen = () => setScreenID((cur) => cur + 1);
 
-  const addReportForQuestion = (report) =>
-    setQuestionReport((cur) => [...cur, report]);
+  const addReportForQuestionPhase1 = (report) =>
+    questionReportPhase1.current.push(report);
+
+  const addReportForQuestionPhase2 = (report) =>
+    questionReportPhase2.current.push(report);
 
   const startSessionSubmit = async (code) => {
     const { session, wordsPhase1, wordsPhase2 } = await startSession(code);
@@ -34,20 +39,19 @@ function App() {
     nextScreen();
   };
 
-  // const [isLoading, setIsLoading] = useState(false);
   return (
     <div className="container">
       {screenID === 0 && <StartPage startSessionSubmit={startSessionSubmit} />}
-      {screenID === 2 && (
+      {screenID === 1 && (
         <Phase1
-          addReportForQuestion={addReportForQuestion}
+          addReportForQuestion={addReportForQuestionPhase1}
           questions={questionsPhase1}
           nextScreen={nextScreen}
         />
       )}
-      {screenID === 1 && (
+      {screenID === 2 && (
         <Phase2
-          addReportForQuestion={addReportForQuestion}
+          addReportForQuestion={addReportForQuestionPhase2}
           questions={questionsPhase2}
           nextScreen={nextScreen}
         />
