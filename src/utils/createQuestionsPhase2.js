@@ -1,6 +1,8 @@
 import getRandomInt from "./getRandomInt";
 import shuffle from "./shuffle";
 
+const numberOfBlocks = 4;
+
 const getAllTranslationsFromTrails = (trails) => {
   return trails.map((trail) => trail.translation);
 };
@@ -23,20 +25,20 @@ const createQuestionWithWrongTranslation = (
   return { word, translation: wrongTranslation, answer: false };
 };
 
-export default function createQuestionsPhase2(trails) {
-  const allTranslations = getAllTranslationsFromTrails(trails);
+const createBlock = (trails, allTranslations) => {
   const questions = [];
-
   for (const trail of trails) {
     questions.push(createQuestionWithCorrectTranslation(trail));
     questions.push(createQuestionWithWrongTranslation(trail, allTranslations));
   }
+  return shuffle(questions);
+};
 
-  // TODO: Maybe each block should have different questions and not the same ones reordered.
-  return [
-    shuffle(questions),
-    shuffle(questions),
-    shuffle(questions),
-    shuffle(questions),
-  ];
+export default function createQuestionsPhase2(trails) {
+  const allTranslations = getAllTranslationsFromTrails(trails);
+  const blocks = [];
+
+  for (let i = 0; i < numberOfBlocks; i++)
+    blocks.push(createBlock(trails, allTranslations));
+  return blocks.flatMap((v) => v);
 }

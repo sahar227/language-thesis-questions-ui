@@ -1,0 +1,11 @@
+.container {
+  min-height: 100vh;
+}
+
+.image {
+  max-height: 300px;
+}
+
+.letter {
+  font-size: 60px;
+}
