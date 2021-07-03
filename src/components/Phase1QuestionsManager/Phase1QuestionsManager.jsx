@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import soundClient from "soundoftext-js";
-import AnswerButton from "../AnswerButton/AnswerButton";
+import AnswerControls from "../AnswerControls/AnswerControls";
 import styles from "./Phase1QuestionsManager.module.css";
 
 const showLetterTimeInMS = 1000;
@@ -25,30 +25,12 @@ const QuestionPhase = React.memo(
       setNextQuestion();
     };
 
-    useEffect(() => {
-      const handleClick = (e) => {
-        switch (e.keyCode) {
-          case 37:
-            giveAnswer(false);
-            break;
-          case 39:
-            giveAnswer(true);
-            break;
-        }
-      };
-      document.addEventListener("keydown", handleClick);
-
-      return () => document.removeEventListener("keydown", handleClick);
-    }, []);
     return (
       <div>
         <p>האם האות מופיעה במילה הבאה?</p>
         <h1>{word}</h1>
         <img className={styles.image} src={imageURL} />
-        <div className={styles.buttons}>
-          <AnswerButton answer={true} giveAnswerFunction={giveAnswer} />
-          <AnswerButton answer={false} giveAnswerFunction={giveAnswer} />
-        </div>
+        <AnswerControls giveAnswerFunction={giveAnswer} />
       </div>
     );
   }

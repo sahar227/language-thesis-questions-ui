@@ -9,7 +9,7 @@ import createQuestionsPhase2 from "./utils/createQuestionsPhase2";
 function App() {
   const [questionsPhase1, setQuestionsPhase1] = useState([]);
   const [questionsPhase2, setQuestionsPhase2] = useState([]);
-  const [screenID, setScreenID] = useState(0);
+  const [screenID, setScreenID] = useState(2); // TODO: Change back to zero
   const [questionReport, setQuestionReport] = useState([]);
 
   const nextScreen = () => setScreenID((cur) => cur + 1);
