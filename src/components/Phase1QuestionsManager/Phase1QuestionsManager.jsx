@@ -3,7 +3,7 @@ import soundClient from "soundoftext-js";
 import AnswerControls from "../AnswerControls/AnswerControls";
 import styles from "./Phase1QuestionsManager.module.css";
 
-const showLetterTimeInMS = 1000;
+const showLetterTimeInMS = 500;
 
 const LetterPhase = ({ letter }) => {
   return <h1 className={styles.letter}>{letter}</h1>;
@@ -70,7 +70,17 @@ export default function Phase1QuestionsManager({
 
   return (
     <div className={styles.container}>
-      {showingLetter && <LetterPhase letter={currentQuestion.letter} />}
+      {showingLetter && (
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <LetterPhase letter={currentQuestion.letter} />
+        </div>
+      )}
       {!showingLetter && (
         <QuestionPhase
           question={currentQuestion}

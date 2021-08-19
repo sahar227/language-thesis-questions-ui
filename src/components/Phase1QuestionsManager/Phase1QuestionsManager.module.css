@@ -7,5 +7,6 @@
 }
 
 .letter {
-  font-size: 60px;
+  font-size: 300px;
+  line-height: 0;
 }
