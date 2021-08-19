@@ -8,7 +8,6 @@ export default function Phase1({
 }) {
   return (
     <div>
-      <h1>שלב ראשון</h1>
       <Phase1QuestionsManager
         questions={questions}
         addReportForQuestion={addReportForQuestion}

@@ -24,9 +24,9 @@ const QuestionPhase = ({
 
   return (
     <div>
-      <p>האם התרגום למילה הבאה נכון?</p>
-      <h1>{word}</h1>
-      <h1>{translation}</h1>
+      <p className={styles.question}>האם התרגום למילה הבאה נכון?</p>
+      <h1 className={styles.word}>{word}</h1>
+      <h1 className={styles.translation}>{translation}</h1>
       {userAnswer === null && (
         <AnswerControls giveAnswerFunction={giveAnswer} />
       )}

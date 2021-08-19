@@ -7,7 +7,6 @@ export default function Phase2({
 }) {
   return (
     <div>
-      <h1>שלב שני</h1>
       <Phase2QuestionsManager
         questions={questions}
         addReportForQuestion={addReportForQuestion}

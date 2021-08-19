@@ -27,8 +27,10 @@ const QuestionPhase = React.memo(
 
     return (
       <div>
-        <p>האם האות מופיעה במילה הבאה?</p>
-        <h1>{word}</h1>
+        <p className={styles.question}>
+          האם האות שהוצגה קודם מופיעה במילה הבאה?
+        </p>
+        <h1 className={styles.word}>{word}</h1>
         <img className={styles.image} src={imageURL} />
         <AnswerControls giveAnswerFunction={giveAnswer} />
       </div>

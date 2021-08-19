@@ -2,10 +2,11 @@
   min-height: 100vh;
 }
 
-.image {
-  max-height: 300px;
+.word,
+.translation {
+  font-size: 80px;
 }
 
-.letter {
-  font-size: 60px;
+.question {
+  font-size: 40px;
 }
