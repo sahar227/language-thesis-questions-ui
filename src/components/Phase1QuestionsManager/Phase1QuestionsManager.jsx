@@ -4,6 +4,8 @@ import AnswerControls from "../AnswerControls/AnswerControls";
 import styles from "./Phase1QuestionsManager.module.css";
 
 const showLetterTimeInMS = 500;
+const timeoutSeconds = 30;
+const timeoutMilliSeconds = timeoutSeconds * 1000;
 
 const LetterPhase = ({ letter }) => {
   return <h1 className={styles.letter}>{letter}</h1>;
@@ -14,16 +16,28 @@ const QuestionPhase = React.memo(
     const startTime = performance.now();
     const { word, answer, imageURL, letter } = question;
     const giveAnswer = (userAnswer) => {
+      const isTimeout = userAnswer === null;
       const report = {
         word,
         letter,
         answer,
-        userAnswer,
-        secondsToAnser: (performance.now() - startTime) / 1000,
+        userAnswer: !isTimeout ? userAnswer : "TIME OUT",
+        secondsToAnswer: !isTimeout
+          ? (performance.now() - startTime) / 1000
+          : timeoutSeconds,
       };
       addReportForQuestion(report);
       setNextQuestion();
     };
+
+    useEffect(() => {
+      const timeout = setTimeout(() => {
+        alert("עבר הזמן!");
+        giveAnswer(null);
+      }, timeoutMilliSeconds);
+
+      return () => clearTimeout(timeout);
+    }, []);
 
     return (
       <div>
