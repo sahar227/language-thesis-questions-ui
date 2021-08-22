@@ -6,6 +6,9 @@ import Phase2 from "./pages/Phase2/Phase2";
 import startSession from "./api/startSession";
 import createQuestionsPhase1 from "./utils/createQuestionsPhase1";
 import createQuestionsPhase2 from "./utils/createQuestionsPhase2";
+import { send } from "emailjs-com";
+import { emailTemplateId, emailUserId } from "./utils/config";
+import EndScreen from "./pages/EndScreen/EndScreen";
 
 function App() {
   const [questionsPhase1, setQuestionsPhase1] = useState([]);
@@ -39,6 +42,15 @@ function App() {
     setScreenID(session.groupNumber);
   };
 
+  const emailReports = () => {
+    const params = {
+      from_name: "Sahar",
+      reportPhase1: JSON.stringify(questionReportPhase1.current, null, "\t"),
+      reportPhase2: JSON.stringify(questionReportPhase2.current, null, "\t"),
+    };
+    send(`default_service`, emailTemplateId, params, emailUserId);
+  };
+
   return (
     <div className="container">
       {screenID === 0 && <StartPage startSessionSubmit={startSessionSubmit} />}
@@ -56,6 +68,7 @@ function App() {
           nextScreen={nextScreen}
         />
       )}
+      {screenID === 3 && <EndScreen emailReports={emailReports} />}
     </div>
   );
 }

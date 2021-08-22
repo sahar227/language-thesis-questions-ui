@@ -61,8 +61,9 @@ export default function Phase1QuestionsManager({
   const [showingLetter, setShowingLetter] = useState(true);
 
   const setNextQuestion = () => {
-    if (currentQuestionIndex === questions.length - 1) nextScreen();
-    else setCurrentQuestionIndex((current) => current + 1);
+    if (currentQuestionIndex === questions.length - 1) {
+      nextScreen();
+    } else setCurrentQuestionIndex((current) => current + 1);
   };
   const currentQuestion = questions[currentQuestionIndex];
 
