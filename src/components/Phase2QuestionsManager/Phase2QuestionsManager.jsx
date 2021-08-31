@@ -38,6 +38,7 @@ export default function Phase1QuestionsManager({
   questions,
   addReportForQuestion,
   nextScreen,
+  isPractice = false,
 }) {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [userAnswer, setuserAnswer] = useState(null);
@@ -48,6 +49,10 @@ export default function Phase1QuestionsManager({
     else setCurrentQuestionIndex((current) => current + 1);
   };
   const currentQuestion = questions[currentQuestionIndex];
+
+  const isAnswerCorrect =
+    userAnswer !== null && currentQuestion.answer === userAnswer;
+
   return (
     <div className={styles.container}>
       <QuestionPhase
@@ -59,7 +64,12 @@ export default function Phase1QuestionsManager({
       {userAnswer !== null && (
         <div>
           <p>{currentQuestion.answer === userAnswer ? "נכון" : "לא נכון"}</p>
-          <button onClick={setNextQuestion}>שאלה הבאה</button>
+          {isPractice && !isAnswerCorrect && (
+            <button onClick={() => setuserAnswer(null)}>נסה שנית</button>
+          )}
+          {(!isPractice || isAnswerCorrect) && (
+            <button onClick={setNextQuestion}>שאלה הבאה</button>
+          )}
         </div>
       )}
     </div>
