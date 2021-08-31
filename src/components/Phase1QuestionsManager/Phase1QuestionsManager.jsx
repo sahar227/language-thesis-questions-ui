@@ -94,12 +94,13 @@ export default function Phase1QuestionsManager({
   // get soundID
   // TODO: can possibly reduce time it takes, by getting all the sound urls beforehand, and maybe I can also load the mp3s themselves earlier
   useEffect(() => {
+    if (showingLetter) return;
     soundClient.sounds
       .create({ text: currentQuestion.word, voice: "cy" })
       .then((soundURL) => {
         new Audio(soundURL).play();
       });
-  }, [currentQuestionIndex]);
+  }, [showingLetter]);
 
   return (
     <div className={styles.container}>
