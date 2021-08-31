@@ -7,15 +7,35 @@ const showLetterTimeInMS = 500;
 const timeoutSeconds = 30;
 const timeoutMilliSeconds = timeoutSeconds * 1000;
 
-const LetterPhase = ({ letter }) => {
+const LetterPhase = ({ letter, setShowingLetter }) => {
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setShowingLetter(false);
+    }, showLetterTimeInMS);
+    return () => clearTimeout(timeout);
+  }, []);
+
   return <h1 className={styles.letter}>{letter}</h1>;
 };
 
 const QuestionPhase = React.memo(
-  ({ question, setNextQuestion, addReportForQuestion }) => {
+  ({
+    question,
+    setNextQuestion,
+    addReportForQuestion,
+    isPractice,
+    setShowingLetter,
+  }) => {
     const startTime = performance.now();
     const { word, answer, imageURL, letter } = question;
     const giveAnswer = (userAnswer) => {
+      if (isPractice) {
+        if (userAnswer !== answer) {
+          alert("נסה שנית");
+          setShowingLetter(true);
+        } else setNextQuestion();
+        return;
+      }
       const isTimeout = userAnswer === null;
       const report = {
         word,
@@ -31,13 +51,14 @@ const QuestionPhase = React.memo(
     };
 
     useEffect(() => {
+      if (isPractice) return;
       const timeout = setTimeout(() => {
         alert("עבר הזמן!");
         giveAnswer(null);
       }, timeoutMilliSeconds);
 
       return () => clearTimeout(timeout);
-    }, []);
+    }, [isPractice]);
 
     return (
       <div>
@@ -56,6 +77,7 @@ export default function Phase1QuestionsManager({
   questions,
   addReportForQuestion,
   nextScreen,
+  isPractice = false,
 }) {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [showingLetter, setShowingLetter] = useState(true);
@@ -67,13 +89,7 @@ export default function Phase1QuestionsManager({
   };
   const currentQuestion = questions[currentQuestionIndex];
 
-  useEffect(() => {
-    setShowingLetter(true);
-
-    setTimeout(() => {
-      setShowingLetter(false);
-    }, showLetterTimeInMS);
-  }, [currentQuestionIndex]);
+  useEffect(() => setShowingLetter(true), [currentQuestionIndex]);
 
   // get soundID
   // TODO: can possibly reduce time it takes, by getting all the sound urls beforehand, and maybe I can also load the mp3s themselves earlier
@@ -95,7 +111,10 @@ export default function Phase1QuestionsManager({
             alignItems: "center",
           }}
         >
-          <LetterPhase letter={currentQuestion.letter} />
+          <LetterPhase
+            letter={currentQuestion.letter}
+            setShowingLetter={setShowingLetter}
+          />
         </div>
       )}
       {!showingLetter && (
@@ -103,6 +122,8 @@ export default function Phase1QuestionsManager({
           question={currentQuestion}
           setNextQuestion={setNextQuestion}
           addReportForQuestion={addReportForQuestion}
+          isPractice={isPractice}
+          setShowingLetter={setShowingLetter}
         />
       )}
     </div>
