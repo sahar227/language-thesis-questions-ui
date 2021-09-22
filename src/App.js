@@ -13,13 +13,9 @@ function App() {
   const [questionsPhase2, setQuestionsPhase2] = useState([]);
   const [screenID, setScreenID] = useState(0);
 
-  const questionReportPhase1 = useRef([]);
   const questionReportPhase2 = useRef([]);
 
   const nextScreen = () => setScreenID((cur) => cur + 1);
-
-  const addReportForQuestionPhase1 = (report) =>
-    questionReportPhase1.current.push(report);
 
   const addReportForQuestionPhase2 = (report) =>
     questionReportPhase2.current.push(report);
@@ -44,11 +40,7 @@ function App() {
     <div className="container">
       {screenID === 0 && <StartPage startSessionSubmit={startSessionSubmit} />}
       {screenID === 1 && (
-        <Phase1
-          addReportForQuestion={addReportForQuestionPhase1}
-          questions={questionsPhase1}
-          nextScreen={nextScreen}
-        />
+        <Phase1 questions={questionsPhase1} nextScreen={nextScreen} />
       )}
       {screenID === 2 && (
         <Phase2

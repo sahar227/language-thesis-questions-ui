@@ -3,13 +3,13 @@ import AnswerButton from "../AnswerButton/AnswerButton";
 
 export default function AnswerControls({ giveAnswerFunction }) {
   useEffect(() => {
-    const handleClick = (e) => {
+    const handleClick = async (e) => {
       switch (e.keyCode) {
         case 37:
-          giveAnswerFunction(false);
+          await giveAnswerFunction(false);
           break;
         case 39:
-          giveAnswerFunction(true);
+          await giveAnswerFunction(true);
           break;
       }
     };

@@ -1,5 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import soundClient from "soundoftext-js";
+import { sendReportPhase1 } from "../../api/sendQuestionReports";
+import { useSessionIdState } from "../../context/SessionProvider";
 import AnswerControls from "../AnswerControls/AnswerControls";
 import styles from "./Phase1QuestionsManager.module.css";
 
@@ -28,12 +30,12 @@ const QuestionPhase = React.memo(
   }) => {
     const startTime = performance.now();
     const { word, answer, imageURL, letter } = question;
-    const giveAnswer = (userAnswer) => {
+    const giveAnswer = async (userAnswer) => {
       if (isPractice) {
         if (userAnswer !== answer) {
           alert("נסה שנית");
           setShowingLetter(true);
-        } else setNextQuestion();
+        } else await setNextQuestion();
         return;
       }
       const isTimeout = userAnswer === null;
@@ -47,14 +49,14 @@ const QuestionPhase = React.memo(
           : timeoutSeconds,
       };
       addReportForQuestion(report);
-      setNextQuestion();
+      await setNextQuestion();
     };
 
     useEffect(() => {
       if (isPractice) return;
-      const timeout = setTimeout(() => {
+      const timeout = setTimeout(async () => {
         alert("עבר הזמן!");
-        giveAnswer(null);
+        await giveAnswer(null);
       }, timeoutMilliSeconds);
 
       return () => clearTimeout(timeout);
@@ -75,16 +77,20 @@ const QuestionPhase = React.memo(
 
 export default function Phase1QuestionsManager({
   questions,
-  addReportForQuestion,
   nextScreen,
   isPractice = false,
 }) {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [showingLetter, setShowingLetter] = useState(true);
+  const [sessionId] = useSessionIdState();
 
-  const setNextQuestion = () => {
+  const questionReportPhase1 = useRef([]);
+  const addReportForQuestion = (report) =>
+    questionReportPhase1.current.push(report);
+
+  const setNextQuestion = async () => {
     if (currentQuestionIndex === questions.length - 1) {
-      // TODO: Send report to server here
+      await sendReportPhase1(sessionId, questionReportPhase1.current);
       nextScreen();
     } else setCurrentQuestionIndex((current) => current + 1);
   };

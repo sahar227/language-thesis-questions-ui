@@ -1,11 +1,10 @@
-import React, { useState } from "react";
-import startSession from "../../api/startSession";
-import createQuestionsPhase1 from "../../utils/createQuestionsPhase1";
+import React from "react";
+import { useSessionIdState } from "../../context/SessionProvider";
 
 const codeExpectedLength = 24;
 
 export default function StartPage({ startSessionSubmit }) {
-  const [code, setCode] = useState("");
+  const [code, setCode] = useSessionIdState();
   const isButtonDisabled = code.length !== codeExpectedLength;
 
   const onSubmit = async () => await startSessionSubmit(code);
