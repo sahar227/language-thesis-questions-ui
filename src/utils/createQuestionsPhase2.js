@@ -40,5 +40,5 @@ export default function createQuestionsPhase2(trails) {
 
   for (let i = 0; i < numberOfBlocks; i++)
     blocks.push(createBlock(trails, allTranslations));
-  return blocks.flatMap((v) => v);
+  return blocks;
 }

@@ -84,6 +84,7 @@ export default function Phase1QuestionsManager({
 
   const setNextQuestion = () => {
     if (currentQuestionIndex === questions.length - 1) {
+      // TODO: Send report to server here
       nextScreen();
     } else setCurrentQuestionIndex((current) => current + 1);
   };

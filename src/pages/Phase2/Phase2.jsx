@@ -15,7 +15,7 @@ export default function Phase2({
         <>
           <h1>תרגול!</h1>
           <Phase2QuestionsManager
-            questions={practiceQuestionsPhase2}
+            blocks={practiceQuestionsPhase2}
             addReportForQuestion={addReportForQuestion}
             nextScreen={() => setIsPractice(false)}
             isPractice
@@ -24,7 +24,7 @@ export default function Phase2({
       )}
       {!isPractice && (
         <Phase2QuestionsManager
-          questions={questions}
+          blocks={questions}
           addReportForQuestion={addReportForQuestion}
           nextScreen={nextScreen}
         />

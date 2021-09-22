@@ -34,19 +34,29 @@ const QuestionPhase = ({
   );
 };
 
-export default function Phase1QuestionsManager({
-  questions,
+export default function Phase2QuestionsManager({
+  blocks,
   addReportForQuestion,
   nextScreen,
   isPractice = false,
 }) {
+  const [blockIndex, setBlockIndex] = useState(0);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [userAnswer, setuserAnswer] = useState(null);
 
+  const questions = blocks[blockIndex];
+
   const setNextQuestion = () => {
     setuserAnswer(null);
-    if (currentQuestionIndex === questions.length - 1) nextScreen();
-    else setCurrentQuestionIndex((current) => current + 1);
+    if (currentQuestionIndex === questions.length - 1) {
+      // Block ended
+      // TODO: Send report for the block
+      if (blockIndex < blocks.length - 1) {
+        // Go to the next block
+        setCurrentQuestionIndex(0);
+        setBlockIndex((prev) => prev + 1);
+      } else nextScreen(); // Go to the next screen
+    } else setCurrentQuestionIndex((current) => current + 1); // Go to the next question
   };
   const currentQuestion = questions[currentQuestionIndex];
 
@@ -55,6 +65,7 @@ export default function Phase1QuestionsManager({
 
   return (
     <div className={styles.container}>
+      <p>{blockIndex + 1}</p>
       <QuestionPhase
         question={currentQuestion}
         setuserAnswer={setuserAnswer}
