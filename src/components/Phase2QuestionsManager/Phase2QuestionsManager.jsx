@@ -65,7 +65,6 @@ export default function Phase2QuestionsManager({
 
   return (
     <div className={styles.container}>
-      <p>{blockIndex + 1}</p>
       <QuestionPhase
         question={currentQuestion}
         setuserAnswer={setuserAnswer}
