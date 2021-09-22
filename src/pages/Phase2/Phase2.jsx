@@ -2,11 +2,7 @@ import React, { useState } from "react";
 import Phase2QuestionsManager from "../../components/Phase2QuestionsManager/Phase2QuestionsManager";
 import practiceQuestionsPhase2 from "../../staticData/practiceQuestionsPhase2";
 
-export default function Phase2({
-  questions,
-  addReportForQuestion,
-  nextScreen,
-}) {
+export default function Phase2({ questions, nextScreen }) {
   const [isPractice, setIsPractice] = useState(true);
 
   return (
@@ -16,18 +12,13 @@ export default function Phase2({
           <h1>תרגול!</h1>
           <Phase2QuestionsManager
             blocks={practiceQuestionsPhase2}
-            addReportForQuestion={addReportForQuestion}
             nextScreen={() => setIsPractice(false)}
             isPractice
           />
         </>
       )}
       {!isPractice && (
-        <Phase2QuestionsManager
-          blocks={questions}
-          addReportForQuestion={addReportForQuestion}
-          nextScreen={nextScreen}
-        />
+        <Phase2QuestionsManager blocks={questions} nextScreen={nextScreen} />
       )}
     </div>
   );

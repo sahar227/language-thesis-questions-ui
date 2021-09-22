@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import AnswerControls from "../AnswerControls/AnswerControls";
 import styles from "./Phase2QuestionsManager.module.css";
+import { useSessionIdState } from "../../context/SessionProvider";
+import { sendReportPhase2Block } from "../../api/sendQuestionReports";
 
 const QuestionPhase = ({
   question,
@@ -16,7 +18,7 @@ const QuestionPhase = ({
       translation,
       answer,
       userAnswer: userAnswerInput,
-      secondsToAnser: (performance.now() - startTime) / 1000,
+      secondsToAnswer: (performance.now() - startTime) / 1000,
     };
     addReportForQuestion(report);
     setuserAnswer(userAnswerInput);
@@ -36,7 +38,6 @@ const QuestionPhase = ({
 
 export default function Phase2QuestionsManager({
   blocks,
-  addReportForQuestion,
   nextScreen,
   isPractice = false,
 }) {
@@ -46,11 +47,19 @@ export default function Phase2QuestionsManager({
 
   const questions = blocks[blockIndex];
 
-  const setNextQuestion = () => {
+  const questionReportBlock = useRef([]);
+  const addReportForQuestion = (report) =>
+    questionReportBlock.current.push(report);
+
+  const [sessionId] = useSessionIdState();
+
+  const setNextQuestion = async () => {
     setuserAnswer(null);
     if (currentQuestionIndex === questions.length - 1) {
       // Block ended
-      // TODO: Send report for the block
+      !isPractice &&
+        (await sendReportPhase2Block(sessionId, questionReportBlock.current));
+      questionReportBlock.current = [];
       if (blockIndex < blocks.length - 1) {
         // Go to the next block
         setCurrentQuestionIndex(0);
