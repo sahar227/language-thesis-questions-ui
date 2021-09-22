@@ -1,8 +1,5 @@
-import React, { useEffect } from "react";
+import React from "react";
 
-export default function EndScreen({ emailReports }) {
-  useEffect(() => {
-    emailReports();
-  }, []);
+export default function EndScreen() {
   return <div>Done</div>;
 }
