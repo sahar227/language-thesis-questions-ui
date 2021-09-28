@@ -1,6 +1,6 @@
 import StartPage from "./pages/StartPage/StartPage";
 import "./App.css";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import Phase1 from "./pages/Phase1/Phase1";
 import Phase2 from "./pages/Phase2/Phase2";
 import startSession from "./api/startSession";
@@ -16,19 +16,23 @@ function App() {
   const nextScreen = () => setScreenID((cur) => cur + 1);
 
   const startSessionSubmit = async (code) => {
-    const { session, wordsPhase1, wordsPhase2 } = await startSession(code);
-    const questionsPhase1 = createQuestionsPhase1(wordsPhase1);
-    setQuestionsPhase1(questionsPhase1);
-    const fullWordsPhase2 = [
-      ...wordsPhase2,
-      ...wordsPhase1.map((word) => ({
-        word: word.word,
-        translation: word.translation,
-      })),
-    ];
-    const questionsPhase2 = createQuestionsPhase2(fullWordsPhase2);
-    setQuestionsPhase2(questionsPhase2);
-    setScreenID(session.groupNumber);
+    try {
+      const { session, wordsPhase1, wordsPhase2 } = await startSession(code);
+      const questionsPhase1 = createQuestionsPhase1(wordsPhase1);
+      setQuestionsPhase1(questionsPhase1);
+      const fullWordsPhase2 = [
+        ...wordsPhase2,
+        ...wordsPhase1.map((word) => ({
+          word: word.word,
+          translation: word.translation,
+        })),
+      ];
+      const questionsPhase2 = createQuestionsPhase2(fullWordsPhase2);
+      setQuestionsPhase2(questionsPhase2);
+      setScreenID(session.groupNumber);
+    } catch {
+      alert("שגיאה. אנא וודאו הקוד שקיבלתם נכון.");
+    }
   };
 
   return (
