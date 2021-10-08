@@ -6,6 +6,8 @@ export default function Phase1({ questions, nextScreen }) {
   const [isPractice, setIsPractice] = useState(true);
   const [isStarted, setIsStarted] = useState(false);
 
+  // Start loading images and sounds here, if isStarted is true but we are still loading, show loading message
+
   if (!isStarted) {
     return (
       <div>

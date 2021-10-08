@@ -8,6 +8,13 @@ import createQuestionsPhase1 from "./utils/createQuestionsPhase1";
 import createQuestionsPhase2 from "./utils/createQuestionsPhase2";
 import EndScreen from "./pages/EndScreen/EndScreen";
 
+const imagesCache = [];
+function preloadImage(url) {
+  var img = new Image();
+  img.src = url;
+  imagesCache.push(img);
+}
+
 function App() {
   const [questionsPhase1, setQuestionsPhase1] = useState([]);
   const [questionsPhase2, setQuestionsPhase2] = useState([]);
@@ -18,6 +25,7 @@ function App() {
   const startSessionSubmit = async (code) => {
     try {
       const { session, wordsPhase1, wordsPhase2 } = await startSession(code);
+      wordsPhase1.map((v) => preloadImage(v.imageURL)); // preload all of the images
       const questionsPhase1 = createQuestionsPhase1(wordsPhase1);
       setQuestionsPhase1(questionsPhase1);
       const fullWordsPhase2 = [
@@ -31,7 +39,7 @@ function App() {
       setQuestionsPhase2(questionsPhase2);
       setScreenID(session.groupNumber);
     } catch {
-      alert("שגיאה. אנא וודאו הקוד שקיבלתם נכון.");
+      alert("שגיאה. אנא וודאו שהקוד שקיבלתם נכון.");
     }
   };
 
