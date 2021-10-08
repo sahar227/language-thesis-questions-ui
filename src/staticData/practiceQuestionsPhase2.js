@@ -1,14 +1,19 @@
 const practiceQuestionsPhase2 = [
   [
     {
-      word: "test",
+      word: "braich",
       answer: true,
-      translation: "בדיקה",
+      translation: "זרוע",
     },
     {
-      word: "blha",
+      word: "broga",
+      answer: true,
+      translation: "צפרדע",
+    },
+    {
+      word: "broga",
       answer: false,
-      translation: "בדיקה בדיקה",
+      translation: "מנעול",
     },
   ],
 ];
