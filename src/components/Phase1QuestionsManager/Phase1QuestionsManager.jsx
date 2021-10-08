@@ -119,7 +119,8 @@ export default function Phase1QuestionsManager({
       .then((soundURL) => {
         new Audio(soundURL).play();
       });
-  }, [showingLetter, currentQuestion.word]);
+    // eslint-disable-next-line
+  }, [showingLetter]);
 
   return (
     <div className={styles.container}>
