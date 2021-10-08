@@ -1,4 +1,4 @@
-export default [
+const practiceQuestionsPhase1 = [
   {
     word: "blh",
     answer: true,
@@ -14,3 +14,5 @@ export default [
       "https://outbrain.com/techblog/wp-content/uploads/2017/05/road-sign-361513_960_720.jpg",
   },
 ];
+
+export default practiceQuestionsPhase1;

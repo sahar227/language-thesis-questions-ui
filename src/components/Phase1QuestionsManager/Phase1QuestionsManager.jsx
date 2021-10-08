@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import soundClient from "soundoftext-js";
 import { sendReportPhase1 } from "../../api/sendQuestionReports";
 import { useSessionIdState } from "../../context/SessionProvider";
@@ -15,7 +15,7 @@ const LetterPhase = ({ letter, setShowingLetter }) => {
       setShowingLetter(false);
     }, showLetterTimeInMS);
     return () => clearTimeout(timeout);
-  }, []);
+  }, [setShowingLetter]);
 
   return <h1 className={styles.letter}>{letter}</h1>;
 };
@@ -30,27 +30,39 @@ const QuestionPhase = React.memo(
   }) => {
     const startTime = performance.now();
     const { word, answer, imageURL, letter } = question;
-    const giveAnswer = async (userAnswer) => {
-      if (isPractice) {
-        if (userAnswer !== answer) {
-          alert("נסה שנית");
-          setShowingLetter(true);
-        } else await setNextQuestion();
-        return;
-      }
-      const isTimeout = userAnswer === null;
-      const report = {
-        word,
-        letter,
+    const giveAnswer = useCallback(
+      async (userAnswer) => {
+        if (isPractice) {
+          if (userAnswer !== answer) {
+            alert("נסה שנית");
+            setShowingLetter(true);
+          } else await setNextQuestion();
+          return;
+        }
+        const isTimeout = userAnswer === null;
+        const report = {
+          word,
+          letter,
+          answer,
+          userAnswer: !isTimeout ? userAnswer : "TIME OUT",
+          secondsToAnswer: !isTimeout
+            ? (performance.now() - startTime) / 1000
+            : timeoutSeconds,
+        };
+        addReportForQuestion(report);
+        await setNextQuestion();
+      },
+      [
+        addReportForQuestion,
         answer,
-        userAnswer: !isTimeout ? userAnswer : "TIME OUT",
-        secondsToAnswer: !isTimeout
-          ? (performance.now() - startTime) / 1000
-          : timeoutSeconds,
-      };
-      addReportForQuestion(report);
-      await setNextQuestion();
-    };
+        isPractice,
+        letter,
+        setNextQuestion,
+        setShowingLetter,
+        startTime,
+        word,
+      ]
+    );
 
     useEffect(() => {
       if (isPractice) return;
@@ -60,7 +72,7 @@ const QuestionPhase = React.memo(
       }, timeoutMilliSeconds);
 
       return () => clearTimeout(timeout);
-    }, [isPractice]);
+    }, [isPractice, giveAnswer]);
 
     return (
       <div>
@@ -68,7 +80,7 @@ const QuestionPhase = React.memo(
           האם האות שהוצגה קודם מופיעה במילה הבאה?
         </p>
         <h1 className={styles.word}>{word}</h1>
-        <img className={styles.image} src={imageURL} />
+        <img className={styles.image} src={imageURL} alt={word} />
         <AnswerControls giveAnswerFunction={giveAnswer} />
       </div>
     );
@@ -107,7 +119,7 @@ export default function Phase1QuestionsManager({
       .then((soundURL) => {
         new Audio(soundURL).play();
       });
-  }, [showingLetter]);
+  }, [showingLetter, currentQuestion.word]);
 
   return (
     <div className={styles.container}>

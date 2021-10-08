@@ -1,4 +1,4 @@
-export default [
+const practiceQuestionsPhase2 = [
   [
     {
       word: "test",
@@ -12,3 +12,5 @@ export default [
     },
   ],
 ];
+
+export default practiceQuestionsPhase2;

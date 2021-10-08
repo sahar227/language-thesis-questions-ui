@@ -11,12 +11,14 @@ export default function AnswerControls({ giveAnswerFunction }) {
         case 39:
           await giveAnswerFunction(true);
           break;
+        default:
+          break;
       }
     };
     document.addEventListener("keydown", handleClick);
 
     return () => document.removeEventListener("keydown", handleClick);
-  }, []);
+  }, [giveAnswerFunction]);
 
   return (
     <div>
