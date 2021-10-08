@@ -7,6 +7,7 @@ import startSession from "./api/startSession";
 import createQuestionsPhase1 from "./utils/createQuestionsPhase1";
 import createQuestionsPhase2 from "./utils/createQuestionsPhase2";
 import EndScreen from "./pages/EndScreen/EndScreen";
+import soundClient from "soundoftext-js";
 
 const imagesCache = [];
 function preloadImage(url) {
@@ -15,17 +16,30 @@ function preloadImage(url) {
   imagesCache.push(img);
 }
 
+export const audioCache = {};
+function preloadAudio(word) {
+  soundClient.sounds.create({ text: word, voice: "cy" }).then((soundURL) => {
+    audioCache[word] = new Audio(soundURL);
+  });
+}
+
 function App() {
   const [questionsPhase1, setQuestionsPhase1] = useState([]);
   const [questionsPhase2, setQuestionsPhase2] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
   const [screenID, setScreenID] = useState(0);
 
   const nextScreen = () => setScreenID((cur) => cur + 1);
 
   const startSessionSubmit = async (code) => {
     try {
+      setIsLoading(true);
       const { session, wordsPhase1, wordsPhase2 } = await startSession(code);
-      wordsPhase1.map((v) => preloadImage(v.imageURL)); // preload all of the images
+      wordsPhase1.map((v) => {
+        preloadImage(v.imageURL);
+        preloadAudio(v.word);
+        return null;
+      }); // preload all of the assets
       const questionsPhase1 = createQuestionsPhase1(wordsPhase1);
       setQuestionsPhase1(questionsPhase1);
       const fullWordsPhase2 = [
@@ -38,10 +52,14 @@ function App() {
       const questionsPhase2 = createQuestionsPhase2(fullWordsPhase2);
       setQuestionsPhase2(questionsPhase2);
       setScreenID(session.groupNumber);
+      setIsLoading(false);
     } catch {
       alert("שגיאה. אנא וודאו שהקוד שקיבלתם נכון.");
+      setIsLoading(false);
     }
   };
+
+  if (isLoading) return <p>טוען...</p>;
 
   return (
     <div className="container">

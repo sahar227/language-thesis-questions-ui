@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import soundClient from "soundoftext-js";
 import { sendReportPhase1 } from "../../api/sendQuestionReports";
+import { audioCache } from "../../App";
 import { useSessionIdState } from "../../context/SessionProvider";
 import AnswerControls from "../AnswerControls/AnswerControls";
 import styles from "./Phase1QuestionsManager.module.css";
@@ -110,15 +110,9 @@ export default function Phase1QuestionsManager({
 
   useEffect(() => setShowingLetter(true), [currentQuestionIndex]);
 
-  // get soundID
-  // TODO: can possibly reduce time it takes, by getting all the sound urls beforehand, and maybe I can also load the mp3s themselves earlier
   useEffect(() => {
     if (showingLetter) return;
-    soundClient.sounds
-      .create({ text: currentQuestion.word, voice: "cy" })
-      .then((soundURL) => {
-        new Audio(soundURL).play();
-      });
+    audioCache[currentQuestion.word]?.play();
     // eslint-disable-next-line
   }, [showingLetter]);
 
