@@ -10,6 +10,7 @@ const QuestionPhase = ({
   userAnswer,
   setuserAnswer,
   addReportForQuestion,
+  isPractice,
 }) => {
   const startTime = performance.now();
   const { word, translation, answer } = question;
@@ -27,7 +28,9 @@ const QuestionPhase = ({
 
   return (
     <div>
-      <p className={styles.question}>האם התרגום למילה הבאה נכון?</p>
+      {isPractice && (
+        <p className={styles.question}>האם התרגום למילה הבאה נכון?</p>
+      )}
       <h1 className={styles.word}>{word}</h1>
       <h1 className={styles.translation}>{translation}</h1>
       {userAnswer === null && (
@@ -85,6 +88,7 @@ export default function Phase2QuestionsManager({
         setuserAnswer={setuserAnswer}
         userAnswer={userAnswer}
         addReportForQuestion={addReportForQuestion}
+        isPractice={isPractice}
       />
       {userAnswer !== null && (
         <div>
