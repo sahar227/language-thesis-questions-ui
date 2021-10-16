@@ -36,7 +36,10 @@ const QuestionPhase = React.memo(
           if (userAnswer !== answer) {
             alert("נסה שנית");
             setShowingLetter(true);
-          } else await setNextQuestion();
+          } else {
+            alert("תשובה נכונה!");
+            await setNextQuestion();
+          }
           return;
         }
         const isTimeout = userAnswer === null;

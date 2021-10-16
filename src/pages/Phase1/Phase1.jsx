@@ -4,11 +4,12 @@ import practiceQuestionsPhase1 from "../../staticData/practiceQuestionsPhase1";
 
 export default function Phase1({ questions, nextScreen }) {
   const [isPractice, setIsPractice] = useState(true);
+  const [instructionsSlideNumber, setInstructionsSlideNumber] = useState(0);
   const [isStarted, setIsStarted] = useState(false);
 
   // Start loading images and sounds here, if isStarted is true but we are still loading, show loading message
 
-  if (!isStarted) {
+  if (!isStarted && instructionsSlideNumber === 0) {
     return (
       <div>
         <p>במטלה זו תוצג בפניכם אות ולאחר מכן מילה בשפה זרה.</p>
@@ -24,7 +25,27 @@ export default function Phase1({ questions, nextScreen }) {
         <p style={{ fontWeight: "bold" }}>
           עליכם להשיב בצורה המדויקת והמהירה ביותר.
         </p>
-        <button onClick={() => setIsStarted(true)}>התחל</button>
+        <button onClick={() => setInstructionsSlideNumber(true)}>המשך</button>
+      </div>
+    );
+  }
+
+  if (!isStarted && instructionsSlideNumber === 1) {
+    return (
+      <div>
+        <h1 style={{ fontSize: "80px" }}>תרגול:</h1>
+        <p style={{ fontSize: "20px" }}>
+          כעת יוצג בפניכם תרגול קצר כדי לוודא הבנה.
+        </p>
+        <p>לחצו כדי להתחיל את התרגול.</p>
+        <button
+          onClick={() => {
+            setIsPractice(true);
+            setIsStarted(true);
+          }}
+        >
+          התחל תרגול
+        </button>
       </div>
     );
   }
