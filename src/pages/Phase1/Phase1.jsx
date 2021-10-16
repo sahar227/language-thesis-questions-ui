@@ -6,6 +6,8 @@ export default function Phase1({ questions, nextScreen }) {
   const [isPractice, setIsPractice] = useState(true);
   const [instructionsSlideNumber, setInstructionsSlideNumber] = useState(0);
   const [isStarted, setIsStarted] = useState(false);
+  const [isPracticeOverScreenShown, setIsPracticeOverScreenShown] =
+    useState(false);
 
   // Start loading images and sounds here, if isStarted is true but we are still loading, show loading message
 
@@ -62,7 +64,18 @@ export default function Phase1({ questions, nextScreen }) {
           />
         </>
       )}
-      {!isPractice && (
+      {!isPracticeOverScreenShown && (
+        <>
+          <p>עבודה טובה! כדי להתחיל את המבחן לחצו על כפתור המשך.</p>
+          <p style={{ fontWeight: "bold" }}>
+            זכרו שעליכם להשיב בצורה המדויקת והמהירה ביותר.
+          </p>
+          <button onClick={() => setIsPracticeOverScreenShown(true)}>
+            המשך
+          </button>
+        </>
+      )}
+      {!isPractice && isPracticeOverScreenShown && (
         <Phase1QuestionsManager questions={questions} nextScreen={nextScreen} />
       )}
     </div>
