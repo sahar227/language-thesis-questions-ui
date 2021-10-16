@@ -39,7 +39,12 @@ function App() {
         preloadImage(v.imageURL);
         preloadAudio(v.word);
         return null;
-      }); // preload all of the assets
+      }); // preload all of the assets phase1
+      wordsPhase2.map((v) => {
+        preloadAudio(v.word);
+        return null;
+      }); // preload all of the assets phase2
+
       const questionsPhase1 = createQuestionsPhase1(wordsPhase1);
       setQuestionsPhase1(questionsPhase1);
       const fullWordsPhase2 = [

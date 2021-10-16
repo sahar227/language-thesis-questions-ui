@@ -1,8 +1,9 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import AnswerControls from "../AnswerControls/AnswerControls";
 import styles from "./Phase2QuestionsManager.module.css";
 import { useSessionIdState } from "../../context/SessionProvider";
 import { sendReportPhase2Block } from "../../api/sendQuestionReports";
+import { audioCache } from "../../App";
 
 const QuestionPhase = ({
   question,
@@ -71,6 +72,11 @@ export default function Phase2QuestionsManager({
 
   const isAnswerCorrect =
     userAnswer !== null && currentQuestion.answer === userAnswer;
+
+  useEffect(() => {
+    audioCache[currentQuestion.word]?.play();
+    // eslint-disable-next-line
+  }, [currentQuestion]);
 
   return (
     <div className={styles.container}>
