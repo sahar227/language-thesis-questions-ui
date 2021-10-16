@@ -18,6 +18,7 @@ export default function Phase1({ questions, nextScreen }) {
           ואם האות לא מופיעה במילה תציינו
           <span style={{ fontWeight: "bold" }}> לא</span>.
         </p>
+        <br />
         <p>לחצו על חץ ימיני במקלדת אם התשובה היא כן.</p>
         <p>לחצו על חץ שמאלי במקלדת עם התשובה היא לא. </p>
         <p style={{ fontWeight: "bold" }}>
