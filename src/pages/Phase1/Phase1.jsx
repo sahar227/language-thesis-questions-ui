@@ -27,7 +27,7 @@ export default function Phase1({ questions, nextScreen }) {
         <p style={{ fontWeight: "bold" }}>
           עליכם להשיב בצורה המדויקת והמהירה ביותר.
         </p>
-        <button onClick={() => setInstructionsSlideNumber(true)}>המשך</button>
+        <button onClick={() => setInstructionsSlideNumber(1)}>המשך</button>
       </div>
     );
   }
