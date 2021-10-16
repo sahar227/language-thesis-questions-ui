@@ -92,7 +92,9 @@ export default function Phase2QuestionsManager({
       />
       {userAnswer !== null && (
         <div>
-          <p>{currentQuestion.answer === userAnswer ? "נכון" : "לא נכון"}</p>
+          <p style={{ fontSize: "30px", fontWeight: "bold" }}>
+            {currentQuestion.answer === userAnswer ? "נכון" : "לא נכון"}
+          </p>
           {isPractice && !isAnswerCorrect && (
             <button onClick={() => setuserAnswer(null)}>נסה שנית</button>
           )}
