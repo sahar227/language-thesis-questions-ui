@@ -48,6 +48,7 @@ export default function Phase2QuestionsManager({
   const [blockIndex, setBlockIndex] = useState(0);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [userAnswer, setuserAnswer] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const questions = blocks[blockIndex];
 
@@ -61,8 +62,11 @@ export default function Phase2QuestionsManager({
     setuserAnswer(null);
     if (currentQuestionIndex === questions.length - 1) {
       // Block ended
-      !isPractice &&
-        (await sendReportPhase2Block(sessionId, questionReportBlock.current));
+      if (!isPractice) {
+        setLoading(true);
+        await sendReportPhase2Block(sessionId, questionReportBlock.current);
+        setLoading(false);
+      }
       questionReportBlock.current = [];
       if (blockIndex < blocks.length - 1) {
         // Go to the next block
@@ -80,6 +84,8 @@ export default function Phase2QuestionsManager({
     audioCache[currentQuestion.word]?.play();
     // eslint-disable-next-line
   }, [currentQuestion]);
+
+  if (loading) return <p>טוען...</p>;
 
   return (
     <div className={styles.container}>

@@ -79,9 +79,10 @@ const QuestionPhase = React.memo(
 
     return (
       <div>
-        <p className={styles.question}>
+        {isPractice &&
+          <p className={styles.question}>
           האם האות שהוצגה קודם מופיעה במילה הבאה?
-        </p>
+        </p>}
         <h1 className={styles.word}>{word}</h1>
         <img className={styles.image} src={imageURL} alt={word} />
         <AnswerControls giveAnswerFunction={giveAnswer} />
