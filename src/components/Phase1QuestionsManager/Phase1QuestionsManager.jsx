@@ -79,10 +79,11 @@ const QuestionPhase = React.memo(
 
     return (
       <div>
-        {isPractice &&
+        {isPractice && (
           <p className={styles.question}>
-          האם האות שהוצגה קודם מופיעה במילה הבאה?
-        </p>}
+            האם האות שהוצגה קודם מופיעה במילה הבאה?
+          </p>
+        )}
         <h1 className={styles.word}>{word}</h1>
         <img className={styles.image} src={imageURL} alt={word} />
         <AnswerControls giveAnswerFunction={giveAnswer} />
@@ -99,6 +100,7 @@ export default function Phase1QuestionsManager({
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [showingLetter, setShowingLetter] = useState(true);
   const [sessionId] = useSessionIdState();
+  const [loading, setLoading] = useState(false);
 
   const questionReportPhase1 = useRef([]);
   const addReportForQuestion = (report) =>
@@ -106,7 +108,9 @@ export default function Phase1QuestionsManager({
 
   const setNextQuestion = async () => {
     if (currentQuestionIndex === questions.length - 1) {
+      setLoading(true);
       await sendReportPhase1(sessionId, questionReportPhase1.current);
+      setLoading(false);
       nextScreen();
     } else setCurrentQuestionIndex((current) => current + 1);
   };
@@ -119,6 +123,8 @@ export default function Phase1QuestionsManager({
     audioCache[currentQuestion.word]?.play();
     // eslint-disable-next-line
   }, [showingLetter]);
+
+  if (loading) return <p>טוען...</p>;
 
   return (
     <div className={styles.container}>
