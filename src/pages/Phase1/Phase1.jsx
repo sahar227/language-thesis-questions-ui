@@ -64,7 +64,7 @@ export default function Phase1({ questions, nextScreen }) {
           />
         </>
       )}
-      {!isPracticeOverScreenShown && (
+      {!isPracticeOverScreenShown && !isPractice && (
         <>
           <p>עבודה טובה! כדי להתחיל את המבחן לחצו על כפתור המשך.</p>
           <p style={{ fontWeight: "bold" }}>

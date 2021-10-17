@@ -62,7 +62,7 @@ export default function Phase2({ questions, nextScreen }) {
           />
         </>
       )}
-      {!isPracticeOverScreenShown && (
+      {!isPracticeOverScreenShown && !isPractice && (
         <>
           <p>עבודה טובה! כדי להתחיל את המבחן לחצו על כפתור המשך.</p>
           <button onClick={() => setIsPracticeOverScreenShown(true)}>
