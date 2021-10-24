@@ -78,7 +78,14 @@ const QuestionPhase = React.memo(
     }, [isPractice, giveAnswer]);
 
     return (
-      <div>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          flexDirection: "column",
+        }}
+      >
         {isPractice && (
           <p className={styles.question}>
             האם האות שהוצגה קודם מופיעה במילה הבאה?
