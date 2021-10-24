@@ -112,11 +112,12 @@ export default function Phase1QuestionsManager({
       await sendReportPhase1(sessionId, questionReportPhase1.current);
       setLoading(false);
       nextScreen();
-    } else setCurrentQuestionIndex((current) => current + 1);
+    } else {
+      setShowingLetter(true);
+      setCurrentQuestionIndex((current) => current + 1);
+    }
   };
   const currentQuestion = questions[currentQuestionIndex];
-
-  useEffect(() => setShowingLetter(true), [currentQuestionIndex]);
 
   useEffect(() => {
     if (showingLetter) return;
