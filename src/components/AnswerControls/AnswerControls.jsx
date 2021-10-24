@@ -21,7 +21,7 @@ export default function AnswerControls({ giveAnswerFunction }) {
   }, [giveAnswerFunction]);
 
   return (
-    <div>
+    <div style={{ display: "flex", gap: "20px" }}>
       <AnswerButton answer={true} giveAnswerFunction={giveAnswerFunction} />
       <AnswerButton answer={false} giveAnswerFunction={giveAnswerFunction} />
     </div>
