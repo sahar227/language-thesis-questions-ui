@@ -47,7 +47,7 @@ const QuestionPhase = React.memo(
           word,
           letter,
           answer,
-          userAnswer: !isTimeout ? userAnswer : "TIME OUT",
+          userAnswer: !isTimeout ? userAnswer : undefined,
           secondsToAnswer: !isTimeout
             ? (performance.now() - startTime) / 1000
             : timeoutSeconds,
