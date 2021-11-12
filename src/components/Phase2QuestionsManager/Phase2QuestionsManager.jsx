@@ -74,7 +74,9 @@ export default function Phase2QuestionsManager({
         setBlockIndex((prev) => prev + 1);
       } else nextScreen(); // Go to the next screen
     } else setCurrentQuestionIndex((current) => current + 1); // Go to the next question
+    // eslint-disable-next-line
   };
+
   const currentQuestion = questions[currentQuestionIndex];
 
   const isAnswerCorrect =
@@ -83,10 +85,31 @@ export default function Phase2QuestionsManager({
   useEffect(() => {
     audioCache[currentQuestion.word]?.play();
     // eslint-disable-next-line
-  }, [currentQuestion]);
+  }, [currentQuestionIndex]);
+
+  useEffect(() => {
+    if (isPractice && !isAnswerCorrect) return;
+    if (userAnswer === null) return;
+    const timeout = setTimeout(() => {
+      setNextQuestion();
+    }, 1000);
+    return () => clearTimeout(timeout);
+    // eslint-disable-next-line
+  }, [isPractice, isAnswerCorrect, userAnswer, currentQuestionIndex]);
 
   if (loading) return <p>טוען...</p>;
 
+  const getFeedbackProps = (answer) => {
+    if (answer)
+      return {
+        text: "נכון",
+        color: "green",
+      };
+    return {
+      text: "לא נכון",
+      color: "red",
+    };
+  };
   return (
     <div className={styles.container}>
       <QuestionPhase
@@ -98,17 +121,18 @@ export default function Phase2QuestionsManager({
       />
       {userAnswer !== null && (
         <div>
-          <p style={{ fontSize: "30px", fontWeight: "bold" }}>
-            {currentQuestion.answer === userAnswer ? "נכון" : "לא נכון"}
-          </p>
+          <Feedback
+            {...getFeedbackProps(currentQuestion.answer === userAnswer)}
+          />
           {isPractice && !isAnswerCorrect && (
             <button onClick={() => setuserAnswer(null)}>נסה שנית</button>
-          )}
-          {(!isPractice || isAnswerCorrect) && (
-            <button onClick={setNextQuestion}>שאלה הבאה</button>
           )}
         </div>
       )}
     </div>
   );
 }
+
+const Feedback = ({ text, color }) => {
+  return <p style={{ fontSize: "30px", fontWeight: "bold", color }}>{text}</p>;
+};
