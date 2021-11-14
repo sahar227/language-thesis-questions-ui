@@ -24,7 +24,13 @@ export default function Phase2({ questions, nextScreen }) {
         <p>לחצו על חץ שמאלי במקלדת עם התשובה היא לא. </p>
         <br />
         <p>אחרי כל תשובה שתשיבו המחשב יאמר האם נכונה או לא נכונה.</p>
-        <p> עליכם להשתמש במידע זה כדי ללמוד כמה שיותר מילים.</p>
+        <p style={{ fontWeight: "bold" }}>
+          לאורך השלב המילים יחזרו על עצמן מספר פעמים.
+        </p>
+        <p style={{ fontWeight: "bold" }}>
+          {" "}
+          עליכם להשתמש בפידבק שניתן כדי ללמוד כמה שיותר מילים.
+        </p>
         <button onClick={() => setInstructionsSlideNumber(1)}>המשך</button>
       </div>
     );
