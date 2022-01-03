@@ -1,23 +1,32 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import AnswerButton from "../AnswerButton/AnswerButton";
 
-export default function AnswerControls({ giveAnswerFunction }) {
+export default React.memo(function AnswerControls({ giveAnswerFunction }) {
+  const lastAnswered = useRef(false);
   useEffect(() => {
-    const handleClick = async (e) => {
+    const handleClick = (e) => {
+      if (lastAnswered.current) {
+        console.log("Tried to give answer twice!");
+        return;
+      }
       switch (e.keyCode) {
         case 37:
-          await giveAnswerFunction(false);
+          lastAnswered.current = true;
+          giveAnswerFunction(false);
           break;
         case 39:
-          await giveAnswerFunction(true);
+          lastAnswered.current = true;
+          giveAnswerFunction(true);
           break;
         default:
           break;
       }
     };
-    document.addEventListener("keydown", handleClick);
+    document.addEventListener("keyup", handleClick);
 
-    return () => document.removeEventListener("keydown", handleClick);
+    return () => {
+      document.removeEventListener("keyup", handleClick);
+    };
   }, [giveAnswerFunction]);
 
   return (
@@ -26,4 +35,4 @@ export default function AnswerControls({ giveAnswerFunction }) {
       <AnswerButton answer={false} giveAnswerFunction={giveAnswerFunction} />
     </div>
   );
-}
+});

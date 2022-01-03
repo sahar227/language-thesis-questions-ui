@@ -7,17 +7,9 @@ const yes = "כן";
 const no = "לא";
 
 export default function AnswerButton({ answer, giveAnswerFunction }) {
-  const handleKeyPress = (e) => {
-    console.log("test");
-    console.log(e.target.value);
-  };
   return (
     <div className={styles.buttonContainer}>
-      <div
-        className={styles.button}
-        onKeyDown={handleKeyPress}
-        onClick={() => giveAnswerFunction(answer)}
-      >
+      <div className={styles.button} onClick={() => giveAnswerFunction(answer)}>
         {answer ? yes : no}
       </div>
       {answer ? (
