@@ -19,7 +19,7 @@ function preloadImage(url) {
 export const audioCache = {};
 function preloadAudio(word) {
   // voices reference: https://soundoftext.com/docs#voices
-  soundClient.sounds.create({ text: word, voice: "en-US" }).then((soundURL) => {
+  soundClient.sounds.create({ text: word, voice: "cs-CZ" }).then((soundURL) => {
     audioCache[word] = new Audio(soundURL);
   });
 }
