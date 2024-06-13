@@ -4,7 +4,7 @@ const practiceQuestionsPhase1 = [
     answer: true,
     letter: "g",
     imageURL:
-      "https://cdn1.vectorstock.com/i/1000x1000/73/75/an-ant-vector-1187375.jpg",
+      "https://i.pinimg.com/564x/3a/88/07/3a88075b98d5bf96b791d7498a94b5ab.jpg",
   },
   {
     word: "wen",
