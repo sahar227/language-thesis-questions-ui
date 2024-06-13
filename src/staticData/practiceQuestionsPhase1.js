@@ -11,7 +11,7 @@ const practiceQuestionsPhase1 = [
     answer: false,
     letter: "b",
     imageURL:
-      "https://media.gettyimages.com/photos/stunning-red-barn-in-green-field-grain-crop-picture-id170615146?s=612x612",
+      "https://helloartsy.com/wp-content/uploads/kids/farming/how-to-draw-a-barn/how-to-draw-a-barn-step-9.jpg",
   },
   {
     word: "gwely",
